@@ -18,3 +18,7 @@ img {
     display: flex;
     align-items: center;
 }
+
+#uv-index {
+    padding: 2px;
+}

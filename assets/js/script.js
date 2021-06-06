@@ -8,10 +8,15 @@ var apiKey = "17bdb0a9cef0e45b9ba087d5a89ddfab";
 var searchWeatherForACity = function (event) {
   // prevent page from refreshing
   event.preventDefault();
+  if (event.type === "submit") {
+    // get value from input element
+    var cityName = cityNameEl.value.trim();
+    cityNameEl.value = "";
+  } else if (event.type === "click") {
+    var cityName = event.target.innerHTML;
+    console.log(cityName);
+  }
 
-  // get value from input element
-  var cityName = cityNameEl.value.trim();
-  cityNameEl.value = "";
   getWeatherForACity(cityName);
 };
 
@@ -22,8 +27,25 @@ var clearData = function () {
 var addToSearchHistory = function (city) {
   var cityNameContainer = document.createElement("div");
   cityNameContainer.innerHTML = city;
+  cityNameContainer.addEventListener("click", searchWeatherForACity);
   searchHistory.appendChild(cityNameContainer);
 };
+
+function getVUIndexColor(UVIndexValue) {
+  if (0 <= UVIndexValue && UVIndexValue < 2) {
+    return "lightGreen";
+  } else if (2 <= UVIndexValue && UVIndexValue < 4) {
+    return "yellow";
+  } else if (4 <= UVIndexValue && UVIndexValue < 6) {
+    return "orange";
+  } else if (6 <= UVIndexValue && UVIndexValue < 8) {
+    return "lightPink";
+  } else if (8 <= UVIndexValue && UVIndexValue < 10) {
+    return "red";
+  } else {
+    console.log("Error: UV Index is undefined");
+  }
+}
 
 var displayUVIndexValue = function (latitude, longitude) {
   // format the github api url
@@ -45,17 +67,28 @@ var displayUVIndexValue = function (latitude, longitude) {
           .json()
           .then(function (data) {
             var UVIndexContainer = document.createElement("div");
-            UVIndexContainer.innerHTML = "UV Index: " + data.current.uvi;
+            var UVIndexSpan = document.createElement("span");
+            // Get "UV Index" value
+            const { uvi } = data.current;
+            UVIndexSpan.innerHTML = uvi;
+            var color = getVUIndexColor(uvi);
+            UVIndexSpan.style.backgroundColor = color;
+            UVIndexSpan.setAttribute("id", "uv-index");
+            UVIndexContainer.innerHTML = "UV Index: ";
+            UVIndexContainer.append(UVIndexSpan);
             weatherTodayEl.appendChild(UVIndexContainer);
             console.log("TEST_data: ", data);
             var test = data.current.weather[0].icon;
             console.log("TEST: " + test);
 
-            return data.current.weather[0].icon;
+            return data;
           })
-          .then(function (icon) {
+          .then(function (data) {
             var img = $("<img />", {
-              src: "http://openweathermap.org/img/wn/" + icon + "@2x.png",
+              src:
+                "http://openweathermap.org/img/wn/" +
+                data.current.weather[0].icon +
+                "@2x.png",
             });
             img.appendTo($("#cityName"));
           });
@@ -113,6 +146,7 @@ var getWeatherForACity = function (city) {
           console.log(data);
           clearData();
           displayWeather(data, city);
+
           addToSearchHistory(city);
         });
       } else {
