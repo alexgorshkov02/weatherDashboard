@@ -25,10 +25,74 @@ var addToSearchHistory = function (city) {
   searchHistory.appendChild(cityNameContainer);
 };
 
+var displayUVIndexValue = function (latitude, longitude) {
+  // format the github api url
+  var apiUrl =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    latitude +
+    "&lon=" +
+    longitude +
+    "&appid=" +
+    apiKey;
+
+  console.log(apiUrl);
+  // make a get request to url
+  fetch(apiUrl)
+    .then(function (response) {
+      // request was successful
+      if (response.ok) {
+        response
+          .json()
+          .then(function (data) {
+            var UVIndexContainer = document.createElement("div");
+            UVIndexContainer.innerHTML = "UV Index: " + data.current.uvi;
+            weatherTodayEl.appendChild(UVIndexContainer);
+            console.log("TEST_data: ", data);
+            var test = data.current.weather[0].icon;
+            console.log("TEST: " + test);
+
+            return data.current.weather[0].icon;
+          })
+          .then(function (icon) {
+            var img = $("<img />", {
+              src: "http://openweathermap.org/img/wn/" + icon + "@2x.png",
+            });
+            img.appendTo($("#cityName"));
+          });
+      } else {
+        alert("Error: " + response.statusText);
+      }
+    })
+    .catch(function (error) {
+      alert(
+        "Unable to get data about the weather. Something is wrong with a remote server"
+      );
+    });
+};
+
 var displayWeather = function (data, city) {
+  // Today's date
+  const today = dateFns.format(new Date(), "M/DD/YYYY");
   var cityNameContainer = document.createElement("div");
-  cityNameContainer.innerHTML = city;
+  cityNameContainer.innerHTML = "<h3>" + city + " (" + today + ")</h3> ";
+  cityNameContainer.setAttribute("id", "cityName");
+
+  var temperatureContainer = document.createElement("div");
+  // Convert Kelvins degrees into Fahrenheit
+  var temperatureFahrenheit = (
+    ((data.main.temp - 273.15) * 9) / 5 +
+    32
+  ).toFixed(2);
+  temperatureContainer.innerHTML = "Temp: " + temperatureFahrenheit + "&#176;F";
+  var windSpeedContainer = document.createElement("div");
+  windSpeedContainer.innerHTML = "Wind: " + data.wind.speed + " MPH";
+  var humidityContainer = document.createElement("div");
+  humidityContainer.innerHTML = "Humidity: " + data.main.humidity + " %";
   weatherTodayEl.appendChild(cityNameContainer);
+  weatherTodayEl.appendChild(temperatureContainer);
+  weatherTodayEl.appendChild(windSpeedContainer);
+  weatherTodayEl.appendChild(humidityContainer);
+  displayUVIndexValue(data.coord.lat, data.coord.lon);
 };
 
 var getWeatherForACity = function (city) {

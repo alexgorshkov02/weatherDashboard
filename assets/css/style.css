@@ -9,3 +9,12 @@
 * {
     border: dotted 1px;
 }
+
+img {
+    height: 50px;
+}
+
+#cityName {
+    display: flex;
+    align-items: center;
+}
