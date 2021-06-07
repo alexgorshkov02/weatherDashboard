@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Weather Dashboard</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-dark bg-dark">
-      <span class="navbar-brand mb-0 h1"><h1>Weather Dashboard</h1></span>
-    </nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-3">
-          <div class="leftPanel">
-              <form id="search-form" class="search-body">
-                <label for="searchForACity"><h3>Search for a City:</h3></label>
-                <input id = "city-name" type="search" class="form-control rounded" placeholder="San Diego" aria-label="Search"
-                  aria-describedby="search-addon" />
-                  <button type="submit" class="btn btn-primary btn-block">Search</button>
-                </form>
-            <div id = "search-history" class="recent-cities"></div>
-          </div>
-        </div>
-        <div class="col-9">
-            <div id= "weatherToday" class="city">City</div>
-            <div class="5daysForecast">5daysForecast</div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Weather Dashboard</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">
+      <h1>Weather Dashboard</h1>
+    </span>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3">
+        <div class="leftPanel">
+          <form id="search-form" class="search-body">
+            <label for="searchForACity">
+              <h3>Search for a City:</h3>
+            </label>
+            <input id="city-name" type="search" class="form-control rounded" placeholder="San Diego" aria-label="Search"
+              aria-describedby="search-addon" />
+            <button type="submit" id="search-button" class="btn btn-primary btn-block">Search</button>
+          </form>
+          <div id="search-history" class="recent-cities"></div>
         </div>
       </div>
+      <div class="col-9">
+        <div id="weather-today"></div>
+        <div>
+          <h5 id="days5-forecast-name"></h5>
+        </div>
+        <div id="days5-forecast"></div>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.js"></script>
-    <script src="./assets/js/script.js"></script>
-  </body>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="./assets/js/script.js"></script>
+</body>
+
 </html>
