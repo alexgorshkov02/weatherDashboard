@@ -1,0 +1,62 @@
+.navbar {
+  justify-content: center;
+}
+
+.bg-dark {
+  background-color: #031e75 !important;
+}
+
+img {
+  height: 50px;
+}
+
+#cityName {
+  display: flex;
+  align-items: center;
+}
+
+#uv-index {
+  padding: 2px;
+}
+
+#days5-forecast {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forecast-form {
+  background-color: #33475a;
+  color: white;
+}
+
+.forecast-form div {
+  padding-bottom: 10px;
+  font-size: 12px;
+}
+
+#weather-today div {
+  padding-bottom: 10px;
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+#weather-today {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#search-button {
+  margin-bottom: 10px;
+}
+
+.search-body {
+  border-bottom: solid 1px;
+}
+
+.search-history-city {
+  margin-top: 10px;
+}
+
+#days5-forecast-name {
+  font-weight: bold;
+}
